@@ -6,9 +6,9 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-border/50">
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
         <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="SnapCut AI" className="h-8 w-8 rounded-lg" />
+          <img src={logo} alt="SnapErase" className="h-8 w-8 rounded-lg" />
           <span className="text-lg font-bold">
-            SnapCut <span className="gradient-text">AI</span>
+            SnapErase <span className="gradient-text">AI</span>
           </span>
         </Link>
         <div className="hidden md:flex items-center gap-8">

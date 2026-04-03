@@ -7,8 +7,8 @@ const Footer = () => (
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div className="space-y-4">
           <div className="flex items-center gap-2">
-            <img src={logo} alt="SnapCut AI" className="h-8 w-8 rounded-lg" />
-            <span className="font-bold">SnapCut <span className="gradient-text">AI</span></span>
+            <img src={logo} alt="SnapErase" className="h-8 w-8 rounded-lg" />
+            <span className="font-bold">SnapErase <span className="gradient-text">AI</span></span>
           </div>
           <p className="text-sm text-muted-foreground">
             Remove backgrounds instantly with AI. Fast, simple, and beautiful.
@@ -37,7 +37,7 @@ const Footer = () => (
         </div>
       </div>
       <div className="mt-8 pt-8 border-t border-border/50 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} SnapCut AI. All rights reserved.
+        © {new Date().getFullYear()} SnapErase. All rights reserved.
       </div>
     </div>
   </footer>
