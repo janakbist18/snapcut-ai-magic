@@ -104,7 +104,7 @@ const Index = () => {
       <section id="features" className="py-20 px-4">
         <div className="container mx-auto max-w-6xl">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-            Why Choose <span className="gradient-text">SnapCut AI</span>?
+            Why Choose <span className="gradient-text">SnapErase</span>?
           </h2>
           <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
             Professional background removal made simple for everyone
@@ -204,7 +204,7 @@ const Index = () => {
               Ready to Remove Backgrounds?
             </h2>
             <p className="text-muted-foreground mb-8 max-w-lg mx-auto">
-              Join thousands of users who trust SnapCut AI for clean, professional results.
+              Join thousands of users who trust SnapErase for clean, professional results.
             </p>
             <Link to="/editor">
               <GradientButton size="lg">
