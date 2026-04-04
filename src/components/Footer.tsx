@@ -31,13 +31,16 @@ const Footer = () => (
         <div>
           <h4 className="font-semibold mb-3">Legal</h4>
           <div className="space-y-2 text-sm text-muted-foreground">
-            <a href="#" className="block hover:text-foreground transition-colors">Privacy</a>
-            <a href="#" className="block hover:text-foreground transition-colors">Terms</a>
+            <Link to="/privacy-policy" className="block hover:text-foreground transition-colors">Privacy Policy</Link>
+            <Link to="/terms-conditions" className="block hover:text-foreground transition-colors">Terms & Conditions</Link>
+            <Link to="/refund-cancellation" className="block hover:text-foreground transition-colors">Refund & Cancellation</Link>
+            <Link to="/shipping-delivery" className="block hover:text-foreground transition-colors">Shipping & Delivery</Link>
+            <Link to="/contact-us" className="block hover:text-foreground transition-colors">Contact Us</Link>
           </div>
         </div>
       </div>
       <div className="mt-8 pt-8 border-t border-border/50 text-center text-sm text-muted-foreground">
-        © {new Date().getFullYear()} SnapErase. All rights reserved.
+        © {new Date().getFullYear()} SnapCut AI Magic. All rights reserved.
       </div>
     </div>
   </footer>

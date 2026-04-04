@@ -3,11 +3,13 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { GradientButton } from "@/components/ui/gradient-button";
 import { CheckCircle2, ArrowRight } from "lucide-react";
+import { initiateEsewaPayment } from "@/lib/esewa";
 
 const plans = [
   {
     name: "Free",
     price: "रु 0",
+    numericPrice: 0,
     period: "Forever",
     features: ["3 images per day", "Standard quality", "PNG download", "Community support"],
     cta: "Get Started",
@@ -16,6 +18,7 @@ const plans = [
   {
     name: "Pro",
     price: "रु 299",
+    numericPrice: 299,
     period: "/month",
     features: ["100 images per month", "HD quality", "Priority processing", "PNG download", "Email support"],
     cta: "Pay with eSewa",
@@ -24,6 +27,7 @@ const plans = [
   {
     name: "Business",
     price: "रु 799",
+    numericPrice: 799,
     period: "/month",
     features: ["Unlimited images", "Ultra HD quality", "Priority processing", "Batch processing", "API access", "Dedicated support"],
     cta: "Pay with eSewa",
@@ -32,6 +36,20 @@ const plans = [
 ];
 
 const Pricing = () => {
+  const handlePaymentClick = async (plan: typeof plans[0], e: React.MouseEvent) => {
+    if (plan.numericPrice > 0) {
+      e.preventDefault(); // Stop routing
+
+      try {
+        // eSewa integration implementation
+        await initiateEsewaPayment(plan.numericPrice);
+      } catch (error) {
+        console.error("eSewa initiation failed:", error);
+        alert("Failed to initiate payment. Please try again.");
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
@@ -64,8 +82,11 @@ const Pricing = () => {
                   {plan.price}
                   <span className="text-base font-normal text-muted-foreground">{plan.period !== "Forever" ? plan.period : ""}</span>
                 </p>
-                {plan.period === "Forever" && <p className="text-sm text-muted-foreground mb-6">Forever free</p>}
-                {plan.period !== "Forever" && <p className="text-sm text-muted-foreground mb-6">Billed monthly</p>}
+                {plan.period === "Forever" ? (
+                  <p className="text-sm text-muted-foreground mb-6">Forever free</p>
+                ) : (
+                  <p className="text-sm text-muted-foreground mb-6">Billed monthly</p>
+                )}
                 <ul className="space-y-3 text-sm mb-8 flex-1">
                   {plan.features.map((f) => (
                     <li key={f} className="flex items-center gap-2">
@@ -74,7 +95,7 @@ const Pricing = () => {
                     </li>
                   ))}
                 </ul>
-                <Link to={plan.popular ? "#" : "/editor"}>
+                <Link to={plan.numericPrice === 0 ? "/editor" : "#"} onClick={(e) => handlePaymentClick(plan, e)}>
                   <GradientButton
                     variant={plan.popular ? "gradient" : "outline"}
                     className="w-full"
