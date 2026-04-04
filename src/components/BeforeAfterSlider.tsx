@@ -15,7 +15,7 @@ const BeforeAfterSlider = ({ original, processed }: BeforeAfterSliderProps) => {
             <ReactCompareSliderImage src={processed} alt="Processed" style={{ background: "transparent" }} />
           </div>
         }
-        style={{ height: "400px" }}
+        style={{ height: "500px" }}
       />
     </div>
   );

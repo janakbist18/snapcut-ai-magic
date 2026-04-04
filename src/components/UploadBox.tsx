@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 import { Upload, Image as ImageIcon } from "lucide-react";
 
@@ -8,6 +8,8 @@ interface UploadBoxProps {
 }
 
 const UploadBox = ({ onFileSelect, isProcessing }: UploadBoxProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       if (acceptedFiles.length > 0) {
@@ -25,8 +27,47 @@ const UploadBox = ({ onFileSelect, isProcessing }: UploadBoxProps) => {
     disabled: isProcessing,
   });
 
+  // Handle paste event (Ctrl+V or Cmd+V)
+  useEffect(() => {
+    const handlePaste = (e: ClipboardEvent) => {
+      if (isProcessing) return;
+      
+      const items = e.clipboardData?.items;
+      if (!items) return;
+
+      for (let item of items) {
+        if (item.type.startsWith("image/")) {
+          e.preventDefault();
+          const file = item.getAsFile();
+          if (file) {
+            // Check file size (10MB max)
+            if (file.size > 10 * 1024 * 1024) {
+              alert("Image size must be less than 10MB");
+              return;
+            }
+            // Check file type
+            const validTypes = ["image/jpeg", "image/png", "image/webp"];
+            if (!validTypes.includes(file.type)) {
+              alert("Only JPG, PNG, and WEBP formats are supported");
+              return;
+            }
+            onFileSelect(file);
+            break;
+          }
+        }
+      }
+    };
+
+    const container = containerRef.current;
+    if (container) {
+      container.addEventListener("paste", handlePaste);
+      return () => container.removeEventListener("paste", handlePaste);
+    }
+  }, [onFileSelect, isProcessing]);
+
   return (
     <div
+      ref={containerRef}
       {...getRootProps()}
       className={`
         relative group cursor-pointer rounded-2xl border-2 border-dashed p-12
@@ -37,6 +78,7 @@ const UploadBox = ({ onFileSelect, isProcessing }: UploadBoxProps) => {
         }
         ${isProcessing ? "opacity-50 pointer-events-none" : ""}
       `}
+      tabIndex={0}
     >
       <input {...getInputProps()} />
       <div className="flex flex-col items-center gap-4">
@@ -52,7 +94,7 @@ const UploadBox = ({ onFileSelect, isProcessing }: UploadBoxProps) => {
             {isDragActive ? "Drop your image here" : "Drag & drop your image"}
           </p>
           <p className="text-sm text-muted-foreground mt-1">
-            or click to browse · JPG, PNG, WEBP · Max 10MB
+            or click to browse · Paste (Ctrl+V) · JPG, PNG, WEBP · Max 10MB
           </p>
         </div>
       </div>
