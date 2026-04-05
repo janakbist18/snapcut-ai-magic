@@ -31,11 +31,11 @@ const UploadBox = ({ onFileSelect, isProcessing }: UploadBoxProps) => {
   useEffect(() => {
     const handlePaste = (e: ClipboardEvent) => {
       if (isProcessing) return;
-      
+
       const items = e.clipboardData?.items;
       if (!items) return;
 
-      for (let item of items) {
+      for (const item of items) {
         if (item.type.startsWith("image/")) {
           e.preventDefault();
           const file = item.getAsFile();
